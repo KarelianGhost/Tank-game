@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class PlayerController : TankController
 {
-    private void FixedUpdate()
+    public override void Update()
     {
+        base.Update();
         if (Input.GetKey(KeyCode.W)) {
             CalculateMovement(Tank.Direction.top);
         } else if (Input.GetKey(KeyCode.S)) {

@@ -5,13 +5,17 @@ using UnityEngine;
 public class GameInit : MonoBehaviour
 {
     public static Map map;
-    public int playerSpawnPosX = 0;
-    public int playerSpawnPosY = 0;
+    private int width = 30;
+    private int height = 30;
 
+    public GameInit()
+    {
+        map = new Map(width, height);
+    }
     // Start is called before the first frame update
     void Start()
     {
-        map = new Map(playerSpawnPosX,playerSpawnPosY);
+        
     }
 
     // Update is called once per frame

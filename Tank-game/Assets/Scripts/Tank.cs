@@ -22,17 +22,17 @@ public class Tank
 
 public class TankController : MonoBehaviour
 {
-    [SerializeField] protected Tank tank = new Tank();
+    [SerializeField] private Tank tank = new Tank();
     int targetX = 0, targetY = 0;
     Tank.Direction targetDirection;
     Vector3 movementTarget = Vector3.zero;
     Quaternion rotationTarget;
     private void Start()
     {
-        transform.position = GameInit.map.map.GetCellCenterPosition(tank.x, tank.y);
-        GameInit.map.map.SetValue(tank.x, tank.y, 1);
+        transform.position = GameInit.map.GetCellCenterPosition(tank.x, tank.y);
+        GameInit.map.SetValue(tank.x, tank.y, 1);
     }
-    private void Update() {
+    public virtual void Update() {
         if (tank.isRotating) {
             Rotate(rotationTarget);
         }
@@ -60,12 +60,12 @@ public class TankController : MonoBehaviour
                     targetY = tank.y;
                     break;
             }
-            Debug.Log(GameInit.map.map.GetValue(targetX, targetY));
-            if (GameInit.map.map.GetValue(targetX, targetY) == 0) {
+            //Debug.Log(GameInit.map.GetValue(targetX, targetY));
+            if (GameInit.map.GetValue(targetX, targetY) == 0) {
                 tank.isMoving = true;
-                GameInit.map.map.SetValue(targetX, targetY, 1);
-                GameInit.map.map.SetValue(tank.x, tank.y, 0);
-                movementTarget = GameInit.map.map.GetCellCenterPosition(targetX, targetY);
+                GameInit.map.SetValue(targetX, targetY, 1);
+                GameInit.map.SetValue(tank.x, tank.y, 0);
+                movementTarget = GameInit.map.GetCellCenterPosition(targetX, targetY);
             }
         }
     }
@@ -114,11 +114,28 @@ public class TankController : MonoBehaviour
         transform.rotation = Quaternion.RotateTowards(transform.rotation, target, step);
     }
 
-    protected void CalculateMovement(Tank.Direction targetDir) {
+    protected int CalculateMovement(Tank.Direction targetDir) {
         if (targetDir == tank.dir) {
             GetMovementTarget();
+            return 0;
         } else {
             GetRotationTarget(targetDir);
+            return 1;
         }
+    }
+
+    protected int GetPositionX()
+    {
+        return tank.x;
+    }
+
+    protected int GetPositionY()
+    {
+        return tank.y;
+    }
+
+    protected bool CheckMovement()
+    {
+        return tank.isMoving;
     }
 }
