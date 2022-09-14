@@ -5,12 +5,15 @@ using UnityEngine;
 [System.Serializable]
 public class Tank
 {
+    public TankGun gun;
+    public TankBody body;
     public bool isMoving = false;
     public bool isRotating = false;
+    public bool isShooting = false;
+    public bool isReloaded = true;
     public int x;
     public int y;
-    public float speed;
-    public float rotationSpeed;
+    public float hp;
     public enum Direction {
         top,
         left,
@@ -27,12 +30,23 @@ public class TankController : MonoBehaviour
     Tank.Direction targetDirection;
     Vector3 movementTarget = Vector3.zero;
     Quaternion rotationTarget;
-    private void Start()
+    protected virtual void Start()
     {
         transform.position = GameInit.map.GetCellCenterPosition(tank.x, tank.y);
         GameInit.map.SetValue(tank.x, tank.y, 1);
+
+        if (tank.gun != null & tank.body != null)
+            LoadTank(tank.gun,tank.body);
     }
-    public virtual void Update() {
+    protected virtual void Update() {
+        if (tank.hp <= 0)
+        {
+            DestroyTank();
+        }
+        if (tank.isShooting)
+        {
+            Shoot();
+        }
         if (tank.isRotating) {
             Rotate(rotationTarget);
         }
@@ -40,6 +54,7 @@ public class TankController : MonoBehaviour
             Move(movementTarget);
         }
     }
+
     private void GetMovementTarget() {
         if (!tank.isMoving && !tank.isRotating) {
             switch (tank.dir) {
@@ -76,7 +91,7 @@ public class TankController : MonoBehaviour
             tank.y = targetY;
             return;
         }
-        float step = tank.speed * Time.deltaTime;
+        float step = tank.body.speed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, target, step);
     }
 
@@ -110,7 +125,7 @@ public class TankController : MonoBehaviour
             tank.dir = targetDirection;
             return;
         }
-        float step = tank.rotationSpeed * Time.deltaTime;
+        float step = tank.body.rotationSpeed * Time.deltaTime;
         transform.rotation = Quaternion.RotateTowards(transform.rotation, target, step);
     }
 
@@ -122,6 +137,31 @@ public class TankController : MonoBehaviour
             GetRotationTarget(targetDir);
             return 1;
         }
+    }
+
+    protected void TriggerShooting()
+    {
+        if (tank.isReloaded)
+        {
+            tank.isShooting = true;
+            tank.isReloaded = false;
+            StartCoroutine(Reload(tank.gun.fireRate));
+        }
+    }
+
+    private void Shoot()
+    {
+        Transform gun = gameObject.transform.GetChild(1); //Опять же опасная вещь, зависящая от порядка загрузки частей танка. Нужно найти иной способ. Вторая такая в PlayerController.Start()
+        GameObject projectile = Instantiate(tank.gun.projectile, gun.Find("Projectile Origin").position, gun.rotation);
+        ProjectileController pController = projectile.GetComponent<ProjectileController>();
+        pController.damage = tank.gun.damage;
+        pController.projectileSpeed = tank.gun.projectileSpeed;
+        tank.isShooting = false;
+    }
+
+    private void TakeDamage(float damage)
+    {
+        tank.hp -= damage;
     }
 
     protected int GetPositionX()
@@ -137,5 +177,74 @@ public class TankController : MonoBehaviour
     protected bool CheckMovement()
     {
         return tank.isMoving;
+    }
+
+    protected bool CheckRotation()
+    {
+        return tank.isRotating;
+    }
+
+    protected GameObject GetTankObject()
+    {
+        return gameObject;
+    }
+
+    protected virtual void DestroyTank()
+    {
+        GameInit.map.SetValue(tank.x, tank.y, 0);
+        Destroy(gameObject);
+    }
+
+    private void LoadTank(TankGun gun, TankBody body)
+    {
+        LoadTankBody(body);
+        LoadTankGun(gun);
+    }
+
+    private void LoadTankBody(TankBody body)
+    {
+        tank.hp = tank.body.maxHp;
+        foreach (Transform child in this.transform)
+        {
+            if (Application.isEditor)
+                DestroyImmediate(child.gameObject);
+            else
+                Destroy(child.gameObject);
+        }
+        GameObject model = Instantiate(body.model);
+        model.transform.SetParent(this.transform);
+        model.transform.localPosition = new Vector3(0, 0.5f, 0);
+        model.transform.rotation = Quaternion.identity;
+    }
+
+    private void LoadTankGun(TankGun gun)
+    {
+        foreach (Transform child in this.transform)
+        {
+            if (Application.isEditor)
+                DestroyImmediate(child.gameObject);
+            else
+                Destroy(child.gameObject);
+        }
+        GameObject model = Instantiate(gun.model);
+        model.transform.SetParent(this.transform);
+        model.transform.localPosition = new Vector3(0, 0.8f, 0);
+        model.transform.rotation = Quaternion.identity;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        ProjectileController pController = other.GetComponent<ProjectileController>();
+        if (pController != null)
+        {
+            TakeDamage(pController.damage);
+            Destroy(other.gameObject);
+        }
+    }
+
+    IEnumerator Reload(float reloadingTime)
+    {
+        yield return new WaitForSeconds(reloadingTime);
+        tank.isReloaded = true;
     }
 }

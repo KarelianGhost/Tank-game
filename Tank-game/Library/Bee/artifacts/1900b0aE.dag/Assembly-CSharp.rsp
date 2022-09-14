@@ -354,8 +354,10 @@
 "Assets/Scripts/GameInit.cs"
 "Assets/Scripts/Map.cs"
 "Assets/Scripts/PlayerController.cs"
-"Assets/Scripts/PlayerTurret.cs"
+"Assets/Scripts/ProjectileController.cs"
 "Assets/Scripts/Tank.cs"
+"Assets/Scripts/TankBody.cs"
+"Assets/Scripts/TankGun.cs"
 -langversion:9.0
 
 /deterministic

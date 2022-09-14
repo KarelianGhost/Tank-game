@@ -7,13 +7,14 @@ public class EnemyController : TankController
     List<Tank.Direction> dirPath = new List<Tank.Direction>();
     
     // Start is called before the first frame update
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         StartCoroutine(TriggerPathFind());
     }
 
     // Update is called once per frame
-    public override void Update()
+    protected override void Update()
     {
         if (dirPath.Count > 0)
         {
@@ -24,6 +25,10 @@ public class EnemyController : TankController
                     dirPath.RemoveAt(dirPath.Count - 1);
                 }
             }
+        }
+        if (!CheckRotation())
+        {
+            TriggerShooting();
         }
         base.Update();
     }
@@ -69,10 +74,16 @@ public class EnemyController : TankController
         {
             int posX = Random.Range(0, 10);
             int posY = Random.Range(0, 10);
-            //Debug.Log("Target: " + posX + ":" + posY);
+            Debug.Log("Target: " + posX + ":" + posY);
             CalculatePath(posX, posY);
 
             yield return new WaitForSeconds(5f);
         }
+    }
+
+    protected override void DestroyTank()
+    {
+        Debug.Log("Enemy killed");
+        base.DestroyTank();
     }
 }

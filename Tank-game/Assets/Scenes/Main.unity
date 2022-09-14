@@ -566,7 +566,6 @@ GameObject:
   m_Component:
   - component: {fileID: 522220738}
   - component: {fileID: 522220740}
-  - component: {fileID: 522220739}
   - component: {fileID: 522220735}
   m_Layer: 0
   m_Name: Player
@@ -583,7 +582,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 522220734}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 0.6, z: 1}
@@ -596,7 +595,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 522220734}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.29, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -605,20 +604,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &522220739
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 522220734}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e736b4f6e6fde6d498815f6c788753dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  turretTransform: {fileID: 1786701927}
-  mainCamera: {fileID: 963194227}
 --- !u!114 &522220740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -632,12 +617,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tank:
+    gun: {fileID: 11400000, guid: 0cda906d7ff43fa459705f939bd95aa2, type: 2}
+    body: {fileID: 11400000, guid: 23d0bf5b0d348ea4495bb07216a11954, type: 2}
     isMoving: 0
     isRotating: 0
+    isShooting: 0
+    isReloaded: 1
     x: 0
     y: 0
-    speed: 0
-    rotationSpeed: 0
+    hp: 0
     dir: 0
 --- !u!1 &555451707
 GameObject:
@@ -1135,7 +1123,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1458128023}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 0.6, z: 1}
@@ -1148,7 +1136,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1458128023}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11, y: 0, z: 11}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1170,12 +1158,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tank:
+    gun: {fileID: 11400000, guid: e0964fb7c6e338f45aec782a5cff50df, type: 2}
+    body: {fileID: 11400000, guid: 23d0bf5b0d348ea4495bb07216a11954, type: 2}
     isMoving: 0
     isRotating: 0
+    isShooting: 0
+    isReloaded: 1
     x: 5
     y: 5
-    speed: 10
-    rotationSpeed: 100
+    hp: 0
     dir: 0
 --- !u!1 &1507295640
 GameObject:
@@ -1501,12 +1492,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tank:
+    gun: {fileID: 11400000, guid: 0cda906d7ff43fa459705f939bd95aa2, type: 2}
+    body: {fileID: 11400000, guid: 782e618f43e6d844b86f18be71b03210, type: 2}
     isMoving: 0
     isRotating: 0
+    isShooting: 0
+    isReloaded: 1
     x: 6
     y: 6
-    speed: 10
-    rotationSpeed: 100
+    hp: 0
     dir: 0
 --- !u!65 &1836434213
 BoxCollider:
@@ -1516,7 +1510,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1836434211}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 0.6, z: 1}
@@ -1529,7 +1523,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1836434211}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13, y: 0, z: 13}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
