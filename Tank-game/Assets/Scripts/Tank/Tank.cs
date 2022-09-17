@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Tank : MapObject
+public class Tank : DestructableObject
 {
     public TankGun gun;
     public TankBody body;
@@ -12,20 +12,12 @@ public class Tank : MapObject
     public bool isShooting = false;
     public bool isReloaded = true;
 
-    public enum Direction {
-        top,
-        left,
-        down,
-        right
-    };
-    public Direction dir;
 }
 
 public class TankController : MonoBehaviour
 {
     [SerializeField] private Tank tank = new Tank();
     MapLocation target = new MapLocation(0, 0);
-    //int targetX = 0, targetY = 0;
     Tank.Direction targetDirection;
     Vector3 movementTarget = Vector3.zero;
     Quaternion rotationTarget;
@@ -34,8 +26,24 @@ public class TankController : MonoBehaviour
         transform.position = GameInit.map.GetCellCenterPosition(new MapLocation(tank.pos.x, tank.pos.y));
         GameInit.map.SetValue(new MapLocation(tank.pos.x, tank.pos.y), 1);
 
-        if (tank.gun != null & tank.body != null)
+        if (tank.gun != null && tank.body != null)
             LoadTank(tank.gun,tank.body);
+
+        switch (tank.dir)
+        {
+            case Tank.Direction.top:
+                transform.Rotate(new Vector3(0, 0, 0));
+                break;
+            case Tank.Direction.right:
+                transform.Rotate(new Vector3(0, 90, 0));
+                break;
+            case Tank.Direction.down:
+                transform.Rotate(new Vector3(0, 180, 0));
+                break;
+            case Tank.Direction.left:
+                transform.Rotate(new Vector3(0, 270, 0));
+                break;
+        }
     }
     protected virtual void Update() {
         if (tank.hp <= 0)
@@ -75,6 +83,7 @@ public class TankController : MonoBehaviour
                 tank.isMoving = true;
                 GameInit.map.SetValue(target, 1);
                 GameInit.map.SetValue(tank.pos, 0);
+                tank.pos = target;
                 movementTarget = GameInit.map.GetCellCenterPosition(target);
             }
         }
@@ -82,7 +91,7 @@ public class TankController : MonoBehaviour
     private void Move(Vector3 targetPos) {
         if (transform.position == targetPos) {
             tank.isMoving = false;
-            tank.pos = target;
+            //tank.pos = target; 
             return;
         }
         float step = tank.body.speed * Time.deltaTime;
@@ -163,11 +172,20 @@ public class TankController : MonoBehaviour
         return tank.pos;
     }
 
+    public void SetPosition(MapLocation pos)
+    {
+        tank.pos = pos;
+    }
+    public void SetRotation(MapObject.Direction dir)
+    {
+        tank.dir = dir;
+    }
+
     protected bool CheckMovement()
     {
         return tank.isMoving;
     }
-    protected void SetFaction(MapObject.Faction faction)
+    protected void SetFaction(DestructableObject.Faction faction)
     {
         tank.faction = faction;
     }

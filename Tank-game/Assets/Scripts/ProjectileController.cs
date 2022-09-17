@@ -6,7 +6,7 @@ public class ProjectileController : MonoBehaviour
 {
     public float projectileSpeed;
     public float damage;
-    public MapObject.Faction faction;
+    public DestructableObject.Faction faction;
 
     private void Update()
     {

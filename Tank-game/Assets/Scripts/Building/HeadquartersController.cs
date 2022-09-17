@@ -9,7 +9,7 @@ public class HeadquartersController : BuildingController
     {
         SetPosition(GameInit.map.GetHeadquartersPosition());
         base.Start();
-        SetFaction(MapObject.Faction.ally);
+        SetFaction(DestructableObject.Faction.ally);
     }
     
     // Update is called once per frame

@@ -10,7 +10,7 @@ public class PlayerController : TankController
     protected override void Start()
     {
         base.Start();
-        SetFaction(MapObject.Faction.ally);
+        SetFaction(DestructableObject.Faction.ally);
         mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
         turretTransform = GetTankObject().transform.GetChild(1); //Опасное место, поскольку очень сильно зависит от порядка прикреплённых объектов. Вторая такая в Tank.Shoot()
     }

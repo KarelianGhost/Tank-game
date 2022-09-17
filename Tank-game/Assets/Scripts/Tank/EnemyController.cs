@@ -10,8 +10,9 @@ public class EnemyController : TankController
     protected override void Start()
     {
         base.Start();
-        SetFaction(MapObject.Faction.enemy);
+        SetFaction(DestructableObject.Faction.enemy);
         StartCoroutine(TriggerPathFind());
+        GameInit.enemiesAlive++;
     }
 
     // Update is called once per frame
@@ -83,6 +84,7 @@ public class EnemyController : TankController
     protected override void DestroyTank()
     {
         Debug.Log("Enemy killed");
+        GameInit.enemiesAlive--;
         base.DestroyTank();
     }
 }

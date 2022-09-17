@@ -363,6 +363,7 @@
 "Assets/Scripts/Tank/Tank.cs"
 "Assets/Scripts/Tank/TankBody.cs"
 "Assets/Scripts/Tank/TankGun.cs"
+"Assets/Scripts/Wave.cs"
 -langversion:9.0
 
 /deterministic

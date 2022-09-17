@@ -32,6 +32,30 @@ public class MapLocation
 
 }
 
+public class MapObject
+{
+    public MapLocation pos;
+    public enum Direction
+    {
+        top,
+        left,
+        down,
+        right
+    };
+    public Direction dir;
+
+    public MapObject(MapLocation pos, Direction dir)
+    {
+        this.pos = pos;
+        this.dir = dir;
+    }
+
+    public MapObject()
+    {
+
+    }
+}
+
 public class Map
 {
     private MapLocation headquartersPosition;

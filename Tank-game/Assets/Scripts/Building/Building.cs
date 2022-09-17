@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Building : MapObject
+public class Building : DestructableObject
 {
     public BuildingBase body;
 }
@@ -56,7 +56,7 @@ public class BuildingController : MonoBehaviour
         building.hp -= damage;
     }
 
-    protected void SetFaction(MapObject.Faction faction)
+    protected void SetFaction(DestructableObject.Faction faction)
     {
         building.faction = faction;
     }

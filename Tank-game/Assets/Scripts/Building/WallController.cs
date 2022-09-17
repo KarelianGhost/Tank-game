@@ -8,7 +8,7 @@ public class WallController : BuildingController
     protected override void Start()
     {
         base.Start();
-        SetFaction(MapObject.Faction.neutral);
+        SetFaction(DestructableObject.Faction.neutral);
     }
 
     // Update is called once per frame
