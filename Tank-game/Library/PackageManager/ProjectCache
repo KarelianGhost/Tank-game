@@ -5,29 +5,29 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637973506493750729
-    m_Hash: 3979996139
+      ticks: 638002461906144421
+    m_Hash: 2891438559
   m_LockFileStatus:
     m_FilePath: C:/Users/PC/Documents/GitHub/Tank-game/Tank-game/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637973506567176242
-    m_Hash: 3809199474
+      ticks: 638002461971438418
+    m_Hash: 3956890126
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_LocalPackages:
   m_LocalFileStatus: []
 m_ProjectPath: C:/Users/PC/Documents/GitHub/Tank-game/Tank-game/Packages
-m_EditorVersion: 2021.3.6f1 (7da38d85baf6)
+m_EditorVersion: 2021.3.11f1 (0a5ca18544bf)
 m_ResolvedPackages:
-- packageId: com.unity.collab-proxy@1.15.18
+- packageId: com.unity.collab-proxy@1.17.2
   testable: 0
   isDirectDependency: 1
-  version: 1.15.18
+  version: 1.17.2
   source: 1
-  resolvedPath: C:\Users\PC\Documents\GitHub\Tank-game\Tank-game\Library\PackageCache\com.unity.collab-proxy@1.15.18
+  resolvedPath: C:\Users\PC\Documents\GitHub\Tank-game\Tank-game\Library\PackageCache\com.unity.collab-proxy@1.17.2
   assetPath: Packages/com.unity.collab-proxy
   name: com.unity.collab-proxy
   displayName: Version Control
@@ -106,9 +106,6 @@ m_ResolvedPackages:
     - 2.1.0-preview.5
     - 2.1.0-preview.6
     compatible:
-    - 1.15.18
-    - 1.17.0
-    - 1.17.1
     - 1.17.2
     - 2.0.0-preview.6
     - 2.0.0-preview.8
@@ -120,13 +117,13 @@ m_ResolvedPackages:
     - 2.1.0-preview.3
     - 2.1.0-preview.5
     - 2.1.0-preview.6
-    verified: 1.15.18
+    verified: 1.17.2
   dependencies:
   - name: com.unity.services.core
     version: 1.0.1
   resolvedDependencies:
   - name: com.unity.services.core
-    version: 1.4.0
+    version: 1.4.2
   - name: com.unity.modules.unitywebrequest
     version: 1.0.0
   - name: com.unity.nuget.newtonsoft-json
@@ -156,16 +153,16 @@ m_ResolvedPackages:
     capabilities: 7
   hideInEditor: 1
   isAssetStorePackage: 0
-  datePublishedTicks: 637888962690000000
+  datePublishedTicks: 637937432480000000
   documentationUrl: 
   hasRepository: 1
   repository:
     type: git
     url: https://github.cds.internal.unity3d.com/unity/com.unity.cloud.collaborate.git
-    revision: 611215dcd30048fa921b4be160048bad4022d65f
+    revision: 14d129dcc778f8ea2fdf9d0240b47924e4f0dbb1
     path: 
   unityLifecycle:
-    version: 1.15.18
+    version: 1.17.2
     nextVersion: 
 - packageId: com.unity.feature.development@1.0.1
   testable: 0
@@ -960,7 +957,7 @@ m_ResolvedPackages:
     email: 
     url: 
   category: 
-  type: 
+  type: tool
   description: 'Visual scripting is a workflow that uses visual, node-based graphs
     to design behaviors rather than write lines of C# script.
 
@@ -3055,12 +3052,12 @@ m_ResolvedPackages:
   unityLifecycle:
     version: 1.0.1
     nextVersion: 
-- packageId: com.unity.services.core@1.4.0
+- packageId: com.unity.services.core@1.4.2
   testable: 0
   isDirectDependency: 0
-  version: 1.4.0
+  version: 1.4.2
   source: 1
-  resolvedPath: C:\Users\PC\Documents\GitHub\Tank-game\Tank-game\Library\PackageCache\com.unity.services.core@1.4.0
+  resolvedPath: C:\Users\PC\Documents\GitHub\Tank-game\Tank-game\Library\PackageCache\com.unity.services.core@1.4.2
   assetPath: Packages/com.unity.services.core
   name: com.unity.services.core
   displayName: Services Core
@@ -3095,8 +3092,6 @@ m_ResolvedPackages:
     - 1.4.2
     - 1.4.3
     compatible:
-    - 1.4.0
-    - 1.4.1
     - 1.4.2
     - 1.4.3
     verified: 1.4.3
@@ -3124,16 +3119,16 @@ m_ResolvedPackages:
     capabilities: 7
   hideInEditor: 1
   isAssetStorePackage: 0
-  datePublishedTicks: 637871962570000000
+  datePublishedTicks: 637919618520000000
   documentationUrl: 
   hasRepository: 1
   repository:
     type: git
     url: https://github.cds.internal.unity3d.com/unity/operate-services-sdk.git
-    revision: 92e281deb97a96f7b32464b6874de73a17c140ff
+    revision: 3964d1641ebec474aa425853985bccbdb89c2a49
     path: 
   unityLifecycle:
-    version: 1.4.0
+    version: 1.4.2
     nextVersion: 
 - packageId: com.unity.settings-manager@1.0.3
   testable: 0
@@ -3206,7 +3201,7 @@ m_ResolvedPackages:
     email: 
     url: 
   category: 
-  type: 
+  type: library
   description: 'Newtonsoft Json for use in Unity projects and Unity packages. Currently
     synced to version 13.0.1.
 

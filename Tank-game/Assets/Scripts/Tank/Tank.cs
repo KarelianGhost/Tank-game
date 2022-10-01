@@ -11,6 +11,7 @@ public class Tank : DestructableObject
     public bool isRotating = false;
     public bool isShooting = false;
     public bool isReloaded = true;
+    public int moneyReward;
 
 }
 
@@ -166,6 +167,7 @@ public class TankController : MonoBehaviour
     private void TakeDamage(float damage)
     {
         tank.hp -= damage;
+        GameInit.events.RaiseOnDamageTaken();
     }
     protected MapLocation GetPosition()
     {
@@ -201,6 +203,7 @@ public class TankController : MonoBehaviour
 
     protected virtual void DestroyTank()
     {
+        GameInit.events.RaiseOnTankDestroy(tank, transform.position);
         GameInit.map.SetValue(tank.pos, 0);
         Destroy(gameObject);
     }

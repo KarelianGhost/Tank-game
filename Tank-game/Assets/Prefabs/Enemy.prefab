@@ -356,6 +356,7 @@ MonoBehaviour:
     pos:
       x: 0
       y: 0
+    dir: 0
     hp: 0
     faction: 0
     gun: {fileID: 11400000, guid: e0964fb7c6e338f45aec782a5cff50df, type: 2}
@@ -364,4 +365,4 @@ MonoBehaviour:
     isRotating: 0
     isShooting: 0
     isReloaded: 1
-    dir: 0
+    moneyReward: 1

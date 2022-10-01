@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameInit : MonoBehaviour
 {
     public static Map map;
+    public static EventManager events;
     public static int enemiesAlive = 0;
+    public static int money = 0;
     public List<Wave> waves;
     private int currentWave = 0;
     private int currentGroup = 0;
@@ -15,12 +18,16 @@ public class GameInit : MonoBehaviour
     private int height = 30;
     List<MapObject> spawnPoints = new List<MapObject>();
     MapLocation headquartersPosition = new MapLocation(8, 8);
+    [SerializeField] private GameObject moneyTextPrefab;
+    [SerializeField] private GameObject moneyCounter;
+    [SerializeField] private Canvas ui;
 
     public GameInit()
     {
         spawnPoints.Add(new MapObject(new MapLocation(10, 10), MapObject.Direction.left));
         spawnPoints.Add(new MapObject(new MapLocation(10, 0), MapObject.Direction.top));
         map = new Map(width, height, headquartersPosition);
+        events = new EventManager();
     }
     // Start is called before the first frame update
     void Start()
@@ -31,6 +38,12 @@ public class GameInit : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            Vector3 mousePos = Input.mousePosition;
+            Debug.Log(mousePos.x + "|" + mousePos.y + "|" + mousePos.z);
+
+        }
         if (Input.GetKeyDown(KeyCode.G))
         {
             if (currentWave < waves.Count && isWaveComplete)
@@ -88,6 +101,47 @@ public class GameInit : MonoBehaviour
         isWaveComplete = false;
         currentWave++;
         currentGroup = 0;
+    }
+
+    private void OnEnable()
+    {
+        EventManager.onDamageTaken += LogMessage;
+        EventManager.onTankDestroy += MoneyReward;
+    }
+
+    private void OnDisable()
+    {
+        EventManager.onDamageTaken -= LogMessage;
+    }
+
+    private void LogMessage()
+    {
+        Debug.Log("Something took damage!");
+    }
+
+    private void MoneyReward(Tank tank, Vector3 modelPos)
+    {
+        if (tank.moneyReward > 0) {
+            Debug.Log("You got " + tank.moneyReward + " money");
+            var viewportPosition = Camera.main.WorldToViewportPoint(modelPos);
+            var centerBasedViewPortPosition = viewportPosition - new Vector3(0.5f, 0.5f, 0);
+            var canvasRect = ui.GetComponent<RectTransform>();
+            var scale = canvasRect.sizeDelta;
+            Vector3 canvasPos = Vector3.Scale(centerBasedViewPortPosition, scale);
+            GameObject uiElement = Instantiate(moneyTextPrefab);
+            uiElement.transform.SetParent(ui.transform);
+            uiElement.transform.localPosition = canvasPos;
+            string rewardString = "+" + tank.moneyReward + "$";
+            uiElement.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = rewardString;
+            changeMoney(tank.moneyReward);
+        }
+    }
+
+    private void changeMoney(int value)
+    {
+        money += value;
+        string moneyString = "$" + money;
+        moneyCounter.GetComponent<TextMeshProUGUI>().text = moneyString;
     }
 
 }

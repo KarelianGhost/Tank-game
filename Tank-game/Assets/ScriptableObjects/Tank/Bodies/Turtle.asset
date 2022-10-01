@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db03b1f05dad2214da69a7d884cb70b9, type: 3}
   m_Name: Turtle
   m_EditorClassIdentifier: 
-  name: RustyCrawler
+  name: Turtle
   speed: 1
   rotationSpeed: 20
   maxHp: 2
