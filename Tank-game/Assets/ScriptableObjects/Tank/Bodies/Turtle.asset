@@ -15,5 +15,5 @@ MonoBehaviour:
   name: Turtle
   speed: 1
   rotationSpeed: 20
-  maxHp: 2
+  maxHp: 5
   model: {fileID: 7203057522849172524, guid: ab1290388f63dbf459e3ac8558935fe2, type: 3}

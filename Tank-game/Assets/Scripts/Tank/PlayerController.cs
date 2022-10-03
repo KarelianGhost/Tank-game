@@ -13,6 +13,7 @@ public class PlayerController : TankController
         SetFaction(DestructableObject.Faction.ally);
         mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
         turretTransform = GetTankObject().transform.GetChild(1); //Опасное место, поскольку очень сильно зависит от порядка прикреплённых объектов. Вторая такая в Tank.Shoot()
+        GameInit.playerHealthBar.SetMaxHealth(GetMaxHealth());
     }
     protected override void Update()
     {
@@ -37,6 +38,12 @@ public class PlayerController : TankController
     {
         Debug.Log("Player killed");
         base.DestroyTank();
+    }
+
+    protected override void TakeDamage(float damage)
+    {
+        base.TakeDamage(damage);
+        GameInit.events.RaiseOnDamageTaken(gameObject, GetHealth(), GetMaxHealth(),Tank.Faction.ally,true);
     }
 
     private void RotateTurret()

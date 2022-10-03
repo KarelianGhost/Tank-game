@@ -21,6 +21,11 @@ public class GameInit : MonoBehaviour
     [SerializeField] private GameObject moneyTextPrefab;
     [SerializeField] private GameObject moneyCounter;
     [SerializeField] private Canvas ui;
+    private RectTransform canvasRect;
+    public static HealthBar playerHealthBar;
+    public static HealthBar enemyHealthBar;
+    private GameObject enemyHealthBarObject;
+    private GameObject lastDamagedEnemy;
 
     public GameInit()
     {
@@ -32,12 +37,17 @@ public class GameInit : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        canvasRect = ui.GetComponent<RectTransform>();
+        playerHealthBar = GameObject.Find("PlayerHealthBar").GetComponent<HealthBar>();
+        enemyHealthBarObject = GameObject.Find("EnemyHealthBar");
+        enemyHealthBar = enemyHealthBarObject.GetComponent<HealthBar>();
         StartCoroutine(EnemySpawnLoop());
     }
 
     // Update is called once per frame
     void Update()
     {
+        SetEnemyHealthBarPosition();
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             Vector3 mousePos = Input.mousePosition;
@@ -105,32 +115,50 @@ public class GameInit : MonoBehaviour
 
     private void OnEnable()
     {
-        EventManager.onDamageTaken += LogMessage;
+        EventManager.onDamageTaken += UpdateHealthBars;
         EventManager.onTankDestroy += MoneyReward;
     }
 
     private void OnDisable()
     {
-        EventManager.onDamageTaken -= LogMessage;
+        EventManager.onDamageTaken -= UpdateHealthBars;
+        EventManager.onTankDestroy -= MoneyReward;
     }
 
-    private void LogMessage()
+    private void SetEnemyHealthBarPosition()
     {
-        Debug.Log("Something took damage!");
+        if (lastDamagedEnemy == null)
+        {
+            enemyHealthBarObject.SetActive(false);
+        }
+        else
+        {
+            enemyHealthBarObject.SetActive(true);
+            Vector3 modelPos = lastDamagedEnemy.transform.position;
+            modelPos.y += 2.0f;
+            enemyHealthBarObject.transform.localPosition = CalculateCanvasPostion(modelPos);
+        }
+    }
+    private void UpdateHealthBars(GameObject damageTaker, float health, float maxHealth, DestructableObject.Faction faction, bool isPlayer)
+    {
+        if (isPlayer)
+        {
+            GameInit.playerHealthBar.SetHealth(health);
+        } else if (faction == DestructableObject.Faction.enemy)
+        {
+            lastDamagedEnemy = damageTaker;
+            GameInit.enemyHealthBar.SetMaxHealth(maxHealth);
+            GameInit.enemyHealthBar.SetHealth(health);
+        }
     }
 
     private void MoneyReward(Tank tank, Vector3 modelPos)
     {
         if (tank.moneyReward > 0) {
             Debug.Log("You got " + tank.moneyReward + " money");
-            var viewportPosition = Camera.main.WorldToViewportPoint(modelPos);
-            var centerBasedViewPortPosition = viewportPosition - new Vector3(0.5f, 0.5f, 0);
-            var canvasRect = ui.GetComponent<RectTransform>();
-            var scale = canvasRect.sizeDelta;
-            Vector3 canvasPos = Vector3.Scale(centerBasedViewPortPosition, scale);
             GameObject uiElement = Instantiate(moneyTextPrefab);
             uiElement.transform.SetParent(ui.transform);
-            uiElement.transform.localPosition = canvasPos;
+            uiElement.transform.localPosition = CalculateCanvasPostion(modelPos);
             string rewardString = "+" + tank.moneyReward + "$";
             uiElement.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = rewardString;
             changeMoney(tank.moneyReward);
@@ -142,6 +170,14 @@ public class GameInit : MonoBehaviour
         money += value;
         string moneyString = "$" + money;
         moneyCounter.GetComponent<TextMeshProUGUI>().text = moneyString;
+    }
+
+    private Vector3 CalculateCanvasPostion(Vector3 startPos)
+    {
+        Vector3 viewportPosition = Camera.main.WorldToViewportPoint(startPos);
+        Vector3 centerBasedViewPortPosition = viewportPosition - new Vector3(0.5f, 0.5f, 0);
+        var scale = canvasRect.sizeDelta;
+        return Vector3.Scale(centerBasedViewPortPosition, scale);
     }
 
 }

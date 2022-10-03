@@ -356,7 +356,6 @@
 "Assets/Scripts/Building/BuildingBase.cs"
 "Assets/Scripts/Building/HeadquartersController.cs"
 "Assets/Scripts/Building/WallController.cs"
-"Assets/Scripts/DestroyOnAnimationEnd.cs"
 "Assets/Scripts/DestructableObject.cs"
 "Assets/Scripts/EventManager.cs"
 "Assets/Scripts/GameInit.cs"
@@ -368,6 +367,8 @@
 "Assets/Scripts/Tank/Tank.cs"
 "Assets/Scripts/Tank/TankBody.cs"
 "Assets/Scripts/Tank/TankGun.cs"
+"Assets/Scripts/UI/DestroyOnAnimationEnd.cs"
+"Assets/Scripts/UI/HealthBar.cs"
 "Assets/Scripts/Wave.cs"
 -langversion:9.0
 

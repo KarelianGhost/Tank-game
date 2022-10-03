@@ -164,14 +164,23 @@ public class TankController : MonoBehaviour
         tank.isShooting = false;
     }
 
-    private void TakeDamage(float damage)
+    protected virtual void TakeDamage(float damage)
     {
         tank.hp -= damage;
-        GameInit.events.RaiseOnDamageTaken();
     }
     protected MapLocation GetPosition()
     {
         return tank.pos;
+    }
+
+    protected float GetMaxHealth()
+    {
+        return tank.body.maxHp;
+    }
+
+    protected float GetHealth()
+    {
+        return tank.hp;
     }
 
     public void SetPosition(MapLocation pos)

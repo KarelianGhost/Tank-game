@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class EventManager
 {
-    public delegate void OnDamageTaken();
+    public delegate void OnDamageTaken(GameObject damageTaker, float remainingHealth, float maxHealth, DestructableObject.Faction faction, bool isPlayer);
     public delegate void OnTankDestroy(Tank tank, Vector3 modelPos);
     public static event OnDamageTaken onDamageTaken;
     public static event OnTankDestroy onTankDestroy;
-    public void RaiseOnDamageTaken()
+    public void RaiseOnDamageTaken(GameObject damageTaker, float remainingHealth, float maxHealth, DestructableObject.Faction faction, bool isPlayer)
     {
         if (onDamageTaken != null)
         {
-            onDamageTaken();
+            onDamageTaken(damageTaker, remainingHealth, maxHealth, faction, isPlayer);
         }
     }
     public void RaiseOnTankDestroy(Tank tank, Vector3 modelPos)

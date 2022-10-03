@@ -87,4 +87,10 @@ public class EnemyController : TankController
         GameInit.enemiesAlive--;
         base.DestroyTank();
     }
+
+    protected override void TakeDamage(float damage)
+    {
+        base.TakeDamage(damage);
+        GameInit.events.RaiseOnDamageTaken(gameObject, GetHealth(), GetMaxHealth(), Tank.Faction.enemy, false);
+    }
 }

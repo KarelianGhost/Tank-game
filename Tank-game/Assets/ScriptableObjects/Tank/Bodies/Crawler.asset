@@ -15,5 +15,5 @@ MonoBehaviour:
   name: Crawler
   speed: 10
   rotationSpeed: 100
-  maxHp: 1
+  maxHp: 3
   model: {fileID: 1906301144246384630, guid: fb51848c0daddcf4d866145649ddd977, type: 3}
